@@ -1,9 +1,22 @@
 import pandas as pd
 import akshare as ak
 
-codes = pd.read_csv("D:\\code.text")
-codes.head()
+import requests
+import pandas as pd
+url = "https://raw.githubusercontent.com/alextinng/fission/refs/heads/master/code.text"
 
+# 下载文件并保存到本地
+response = requests.get(url)
+response.raise_for_status()  # 确保请求成功
+
+# 将文件内容保存到本地
+file_path = "data.csv"
+with open(file_path, "w", encoding="utf-8") as file:
+    file.write(response.text)
+
+# 使用 pandas 读取本地文件
+codes = pd.read_csv(file_path)
+codes.head()
 
 start_date = '20250101'
 end_date = '20250225'
