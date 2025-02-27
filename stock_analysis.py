@@ -48,3 +48,11 @@ ORDER BY
     ) TO 'D:\\stock_history.text' (FORMAT 'csv', HEADER TRUE, DELIMITER ',')
 """)
 
+stock_analysis_table_csv = pd.read_csv("D:\\table.text")
+conn.register('stock_analysis', stock_analysis_table_csv)
+result = conn.execute("""
+select "日期","股票代码","涨跌幅","第二天涨跌幅" from stock_analysis where "涨跌幅" > 8 limit 50;
+"""
+).df()
+
+result.head(100)
